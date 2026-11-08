@@ -6,7 +6,8 @@
   "scripts": {
     "lint": "eslint",
     "spellcheck": "cspell lint --dot --gitignore --color --cache --show-suggestions \"(packages|apps)/**/*.@(html|js|cjs|mjs|ts|tsx|css|scss|md)\"",
-    "commit": "cz-git"
+    "commit": "cz",
+    "prepare": "husky"
   },
   "config": {
     "commitizen": {
@@ -34,6 +35,8 @@
     "cz-git": "1.10.1",
     "commitizen": "4.3.1",
     "@commitlint/config-conventional": "20.0.0",
-    "@commitlint/cli": "20.1.0"
+    "@commitlint/cli": "20.1.0",
+    "commitlint": "20.1.0",
+    "husky": "9.1.7"
   }
 }
