@@ -1,5 +1,5 @@
 {
-  "name": "@renmx-aiflow-demo/weorkflow",
+  "name": "@renmx-aiflow-demo/api-server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",

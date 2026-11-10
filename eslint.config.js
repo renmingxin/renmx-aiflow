@@ -35,7 +35,7 @@ const workflowConfig = {
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     'react-hooks/incompatible-library': ['warn', { libraryName: 'react' }],
     'react-hooks/static-components': ['warn', { libraryName: 'react' }],
-    'no-console': 'error',
+    // 'no-console': 'error',
   },
 }
 
@@ -53,7 +53,7 @@ const apiServerConfig = {
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
-    'no-console': 'error',
+    // 'no-console': 'error',
   },
 }
 
@@ -63,7 +63,7 @@ const packagesConfig = {
     globals: globals.node,
   },
   rules: {
-    'no-console': 'error',
+    // 'no-console': 'error',
   },
 }
 

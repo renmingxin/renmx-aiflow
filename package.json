@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint",
+    "lint:staged": "lint-staged",
     "spellcheck": "cspell lint --dot --gitignore --color --cache --show-suggestions \"(packages|apps)/**/*.@(html|js|cjs|mjs|ts|tsx|css|scss|md)\"",
     "commit": "cz",
     "prepare": "husky"
@@ -13,6 +14,22 @@
     "commitizen": {
       "path": "node_modules/cz-git"
     }
+  },
+  "lint-staged": {
+    "*.{md,json}": [
+      "prettier --cache --write --no-error-on-unmatched-pattern"
+    ],
+    "*.{css,less}": [
+      "prettier --cache --write"
+    ],
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "prettier --cache --write"
+    ],
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --cache --parser=typescript --write"
+    ]
   },
   "keywords": [],
   "author": "",
@@ -37,6 +54,7 @@
     "@commitlint/config-conventional": "20.0.0",
     "@commitlint/cli": "20.1.0",
     "commitlint": "20.1.0",
-    "husky": "9.1.7"
+    "husky": "9.1.7",
+    "lint-staged": "16.2.7"
   }
 }
