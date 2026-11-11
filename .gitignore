@@ -78,6 +78,7 @@ dist-ssr
 .devcontainer/postgresql_data
 .claude/
 docker/postgresql_data
+docker/postgres-data
 docker/qdrant_storage
 apps/workflow/app/generated
 apps/api-server/src/generated

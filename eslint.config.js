@@ -18,6 +18,7 @@ const ignores = [
   '**/out/**',
   '**/build/**',
   '**/next-env.d.ts',
+  "**/dist"
 ]
 
 const workflowConfig = {

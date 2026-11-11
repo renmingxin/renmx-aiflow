@@ -1,0 +1,12 @@
+services:
+  renmx-aiflow-demo-pg:
+    container_name: renmx-aiflow-demo-pg
+    image: postgres:18
+    ports:
+      - 5438:5432
+    environment:
+      POSTGRES_USER: renmx
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: postgres
+    volumes:
+      - ./postgres-data:/var/lib/postgresql

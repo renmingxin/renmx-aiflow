@@ -8,7 +8,9 @@
     "lint:staged": "lint-staged",
     "spellcheck": "cspell lint --dot --gitignore --color --cache --show-suggestions \"(packages|apps)/**/*.@(html|js|cjs|mjs|ts|tsx|css|scss|md)\"",
     "commit": "cz",
-    "prepare": "husky"
+    "prepare": "husky",
+    "docker:up": "docker-compose -f docker/docker-compose.yml -p renmx-aiflow-demo-pg up -d",
+    "docker:down": "docker-compose -f docker/docker-compose.yml -p renmx-aiflow-demo-pg down"
   },
   "config": {
     "commitizen": {
