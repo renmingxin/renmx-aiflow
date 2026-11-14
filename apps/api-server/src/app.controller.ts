@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common'
+import { Body, Controller, Get, Post } from '@nestjs/common'
 
 import { AppService } from './app.service.js'
 
@@ -6,8 +6,22 @@ import { AppService } from './app.service.js'
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello()
+  @Get('/users')
+  getUsers() {
+    return this.appService.getUsers()
+  }
+
+  @Post('/save-user')
+  saveUser() {
+    return this.appService.saveUser()
+  }
+
+  @Post('/save-app')
+  saveApp(@Body() body: any) {
+    return this.appService.saveApp(body)
+  }
+  @Get('/get-apps')
+  getAppsByUserId(@Body() body: any) {
+    return this.appService.getAppsByUserId(body.userId)
   }
 }

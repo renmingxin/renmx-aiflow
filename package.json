@@ -1,9 +1,13 @@
 {
   "name": "renmx-aiflow-demo",
   "version": "1.0.0",
+  "packageManager": "pnpm@12.11.2",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build": "turbo run build",
+    "dev:watch": "turbo run build:watch",
+    "dev": "turbo run dev",
     "lint": "eslint",
     "lint:staged": "lint-staged",
     "spellcheck": "cspell lint --dot --gitignore --color --cache --show-suggestions \"(packages|apps)/**/*.@(html|js|cjs|mjs|ts|tsx|css|scss|md)\"",
@@ -57,6 +61,7 @@
     "@commitlint/cli": "20.1.0",
     "commitlint": "20.1.0",
     "husky": "9.1.7",
-    "lint-staged": "16.2.7"
+    "lint-staged": "16.2.7",
+    "turbo": "2.2.3"
   }
 }

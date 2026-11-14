@@ -9,7 +9,7 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
   private pool: Pool
 
   constructor() {
-    const connectionString = process.env.DATABASE_URL || 'postgresql://postgres:xiaoer@localhost:5433/postgres'
+    const connectionString = process.env.DATABASE_URL
     const pool = new Pool({ connectionString })
     const adapter = new PrismaPg(pool)
 
