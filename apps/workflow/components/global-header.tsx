@@ -1,8 +1,3 @@
-/*
- *   Copyright (c) 2026 妙码学院 @Heyi
- *   All rights reserved.
- *   妙码学院官方出品，作者 @Heyi，供学员学习使用，可用作练习，可用作美化简历，不可开源。
- */
 'use client'
 
 import { BookOpenIcon, PackageIcon, SettingsIcon, WrenchIcon, ZapIcon } from 'lucide-react'
@@ -91,7 +86,7 @@ export function GlobalHeader() {
           <div className="w-7 h-7 bg-linear-to-r from-[#4F46E5] to-[#8B5CF6] rounded-md flex items-center justify-center">
             <span className="text-white font-bold text-sm">妙</span>
           </div>
-          <span className="font-semibold text-lg">妙码 AI 引擎</span>
+          <span className="font-semibold text-lg">renmx AI 引擎</span>
         </Link>
       </div>
 
