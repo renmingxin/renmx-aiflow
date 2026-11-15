@@ -55,9 +55,9 @@ export async function POST(request: NextRequest) {
     }
 
     // 检查邮箱是否已验证
-    if (!user.emailVerified) {
-      return apiError(ErrorCode.EMAIL_NOT_VERIFIED)
-    }
+    // if (!user.emailVerified) {
+    //   return apiError(ErrorCode.EMAIL_NOT_VERIFIED)
+    // }
 
     // 生成令牌并设置 Cookie
     const token = generateToken(user.id)

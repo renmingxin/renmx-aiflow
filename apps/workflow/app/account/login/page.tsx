@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
@@ -29,6 +29,16 @@ export default function LoginPage() {
   const [inputType, setInputType] = useState<'login' | 'register'>('login')
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    console.log('params', Object.fromEntries(params))
+    if (params.get('reason') === 'expired') {
+      toast.warning('登录已过期，请重新登录')
+      // 清掉参数，避免刷新后重复提示
+      window.history.replaceState(null, '', window.location.pathname)
+    }
+  }, [])
 
   const handleSubmit = async (values: LoginFormValues) => {
     setIsLoading(true)
@@ -69,14 +79,12 @@ export default function LoginPage() {
             name: values.name || undefined,
           }),
         })
-
         const data = await response.json()
-
         if (!response.ok) {
           throw new Error(data.error || '注册失败')
         }
 
-        toast.success('注册成功！请查收验证邮件后登录')
+        toast.success('注册成功了！')
         setInputType('login')
         form.reset()
       }

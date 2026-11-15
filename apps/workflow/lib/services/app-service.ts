@@ -8,6 +8,7 @@ interface ApiSuccessResponse<T> {
   success: true
   data: T
   message?: string
+  code?: string
 }
 
 interface ApiErrorResponse {
@@ -18,6 +19,17 @@ interface ApiErrorResponse {
 }
 
 type ApiResponse<T> = ApiSuccessResponse<T> | ApiErrorResponse
+
+/**
+ * 登录态失效错误。
+ *
+ * 401 时会在跳转登录页之后抛出。调用方识别到它应当直接忽略、不再弹提示，
+ * 否则提示刚渲染出来就会被整页导航冲掉（location.assign 会销毁当前文档）。
+ * 真正的提示统一由登录页根据 reason 参数展示。
+ */
+export class AuthError extends Error {
+  name = 'AuthError'
+}
 
 // ============================================================
 // API 客户端类
@@ -42,7 +54,15 @@ class AppService {
     })
 
     const data: ApiResponse<T> = await response.json()
-
+    if (response.status === 401) {
+      const loginUrl = new URL('/account/login', window.location.origin)
+      loginUrl.searchParams.set('redirect', window.location.pathname)
+      // expired：登录过期；required：未登录（cookie 被清或从未登录）
+      loginUrl.searchParams.set('reason', data?.code === 'TOKEN_EXPIRED' ? 'expired' : 'required')
+      // 整页跳转，顺带清掉内存里的旧用户状态和 RSC 缓存
+      window.location.assign(loginUrl.toString())
+      throw new AuthError(data?.message || '未登录或登录已过期')
+    }
     if (!response.ok || !data.success) {
       const error = data as ApiErrorResponse
       throw new Error(error.message || '请求失败')

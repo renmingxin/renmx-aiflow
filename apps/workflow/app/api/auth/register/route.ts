@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
 
-    // 验证输入
+    // 验证输入，输出格式为{success: boolean, data: RegisterRequest, error: ZodError | null}
     const result = registerSchema.safeParse(body)
     if (!result.success) {
       return apiError(ErrorCode.VALIDATION_ERROR, result.error.issues[0].message)
@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
     // 发送验证邮件
     // await sendVerifyEmail(email, verifyToken)
 
-    return apiSuccess({ userId: user.id }, '注册成功，请查收验证邮件')
+    return apiSuccess({ userId: user.id }, '注册成功')
   } catch (error) {
     return handleApiError(error)
   }
