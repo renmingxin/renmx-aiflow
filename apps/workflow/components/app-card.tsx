@@ -82,7 +82,7 @@ export function AppCard({ app, onDelete, onAppUpdated }: AppCardProps) {
   return (
     <>
       <Card className="group hover:shadow-md transition-shadow cursor-pointer border-muted-foreground/10 overflow-hidden">
-        <Link href={`/app/${app.id}/workflow`}>
+        <Link href={`/${app.id}/workflow`}>
           <div className="p-4">
             {/* 顶部：图标 + 信息 */}
             <div className="flex items-start gap-3 mb-6">
@@ -133,7 +133,7 @@ export function AppCard({ app, onDelete, onAppUpdated }: AppCardProps) {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   <DropdownMenuItem asChild>
-                    <Link href={`/app/${app.id}/workflow`}>编辑</Link>
+                    <Link href={`/${app.id}/workflow`}>编辑</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={handleEditClick}>编辑信息</DropdownMenuItem>
                   <DropdownMenuSeparator />
