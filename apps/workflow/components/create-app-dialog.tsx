@@ -51,7 +51,7 @@ export function CreateAppDialog({ open, onOpenChange, onAppCreated }: CreateAppD
       onAppCreated?.(newApp)
 
       // 跳转到应用编辑页面
-      // router.push(`/${newApp.id}/workflow`)
+      // router.push(`/app/${newApp.id}/workflow`)
     } catch (error) {
       console.error('创建应用失败:', error)
       toast.error(error instanceof Error ? error.message : '创建应用失败')

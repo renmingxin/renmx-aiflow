@@ -1,5 +1,17 @@
 'use client'
 
+/**
+ * 测试运行 - 「详情」标签页
+ *
+ * 展示一次工作流执行的完整元信息，数据全部来自 useWorkflowRunner 维护的 TestRunState：
+ *   - 执行摘要：运行状态、耗时、Token 消耗、执行 ID
+ *   - 时间信息：开始时间 / 结束时间
+ *   - 输入参数、输出结果的 JSON 折叠面板
+ *   - 失败时的错误详情
+ *
+ * 纯展示组件，不发起请求，也不修改运行状态。
+ */
+
 import { AlertCircleIcon, CheckCircle2Icon, ClockIcon, CopyIcon, HashIcon, Loader2, ZapIcon } from 'lucide-react'
 import { useMemo, useState } from 'react'
 
@@ -8,11 +20,17 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import type { TestRunState, TestRunStatus } from '@/lib/types/test-run'
 
 interface DetailsTabProps {
+  /** 完整的运行状态快照（状态、输入、结果、时间、耗时、执行 ID、token 用量） */
   state: TestRunState
 }
 
 /**
- * Format duration to human-readable string
+ * 把毫秒数格式化成便于阅读的时长。
+ *
+ * 分三档：
+ *   < 1s      -> 直接显示毫秒（如 350ms）
+ *   < 1min    -> 显示秒并保留两位小数（如 2.35s）
+ *   >= 1min   -> 显示分 + 秒（如 1m 23.4s）
  */
 function formatDuration(ms: number): string {
   if (ms < 1000) {
@@ -27,7 +45,8 @@ function formatDuration(ms: number): string {
 }
 
 /**
- * Format date to locale string
+ * 把日期格式化为本地化的中文时间字符串。
+ * 未开始的执行（endTime 为 null）统一显示为 “-”。
  */
 function formatDate(date: Date | null): string {
   if (!date) return '-'
@@ -42,7 +61,11 @@ function formatDate(date: Date | null): string {
 }
 
 /**
- * Status icon component
+ * 运行状态图标：
+ *   running -> 旋转加载图标（蓝）
+ *   success -> 对勾（绿）
+ *   error   -> 警告（红）
+ *   其他    -> 时钟（灰，对应 idle）
  */
 function StatusIcon({ status }: { status: TestRunStatus }) {
   switch (status) {
@@ -58,7 +81,7 @@ function StatusIcon({ status }: { status: TestRunStatus }) {
 }
 
 /**
- * Status text
+ * 把运行状态映射为中文文案，供摘要卡片展示。
  */
 function getStatusText(status: TestRunStatus): string {
   switch (status) {
@@ -74,30 +97,40 @@ function getStatusText(status: TestRunStatus): string {
 }
 
 /**
- * JSON viewer with copy functionality
+ * 可折叠的 JSON 区块（用于输入参数 / 输出结果）。
+ *
+ * - 默认收起，点击标题栏展开/收起
+ * - 展开后才渲染 <pre> 和复制按钮，避免长 JSON 一直占用 DOM 与布局
+ * - 数据为空（null / undefined / 空对象）时显示「无数据」占位
+ * - 复制按钮阻止冒泡，防止点击复制时顺带触发折叠
  */
 function JsonSection({ title, data }: { title: string; data: unknown }) {
+  /** 折叠面板是否展开 */
   const [isOpen, setIsOpen] = useState(false)
+  /** 复制按钮的临时反馈状态（2 秒后还原） */
   const [copied, setCopied] = useState(false)
 
   const formattedJson = useMemo(() => {
     try {
       return JSON.stringify(data, null, 2)
     } catch {
+      // 循环引用、BigInt 等无法序列化的值，退化为字符串避免渲染崩溃
       return String(data)
     }
   }, [data])
 
+  /** 复制格式化后的 JSON 到剪贴板 */
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(formattedJson)
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     } catch {
-      // Ignore copy errors
+      // 剪贴板不可用时静默失败，不影响查看数据
     }
   }
 
+  /** 判断是否「没有可展示的数据」：null/undefined，或空对象 */
   const isEmpty = !data || (typeof data === 'object' && Object.keys(data as object).length === 0)
 
   return (
@@ -139,12 +172,20 @@ function JsonSection({ title, data }: { title: string; data: unknown }) {
 }
 
 /**
- * Details Tab Component
- * Displays execution details, metadata, input/output JSON
+ * 「详情」标签页主组件。
+ *
+ * 布局从上到下：
+ *   执行摘要（状态 / 耗时 / Token / 执行 ID）
+ *   时间信息（开始、结束时间）
+ *   输入参数字段（可折叠 JSON）
+ *   输出结果（可折叠 JSON）
+ *   错误详情（仅失败时出现）
  */
 export function DetailsTab({ state }: DetailsTabProps) {
+  // 解构出本页需要的字段，避免模板里反复写 state.xxx
   const { status, inputs, result, startTime, endTime, duration, executionId, totalTokens } = state
 
+  // 尚未运行过：没有任何执行数据可展示
   if (status === 'idle') {
     return (
       <div className="text-center py-12 text-muted-foreground">
@@ -155,11 +196,11 @@ export function DetailsTab({ state }: DetailsTabProps) {
 
   return (
     <div className="space-y-4">
-      {/* Status Summary Card */}
+      {/* 执行摘要卡片：四项核心指标，两列网格排列 */}
       <div className="border rounded-lg p-4 space-y-3">
         <h4 className="text-sm font-medium">执行摘要</h4>
         <div className="grid grid-cols-2 gap-4">
-          {/* Status */}
+          {/* 状态：运行中/成功/失败/等待运行 */}
           <div className="flex items-center gap-2">
             <StatusIcon status={status} />
             <div>
@@ -168,7 +209,7 @@ export function DetailsTab({ state }: DetailsTabProps) {
             </div>
           </div>
 
-          {/* Duration */}
+          {/* 耗时：运行中显示“计算中...”，结束后显示格式化时长 */}
           <div className="flex items-center gap-2">
             <ClockIcon className="h-5 w-5 text-muted-foreground" />
             <div>
@@ -177,7 +218,7 @@ export function DetailsTab({ state }: DetailsTabProps) {
             </div>
           </div>
 
-          {/* Tokens */}
+          {/* Token 消耗：为 0 时显示 “-”，避免误以为真的消耗了 0 个 token */}
           <div className="flex items-center gap-2">
             <ZapIcon className="h-5 w-5 text-muted-foreground" />
             <div>
@@ -186,7 +227,7 @@ export function DetailsTab({ state }: DetailsTabProps) {
             </div>
           </div>
 
-          {/* Execution ID */}
+          {/* 执行 ID：超长时截断，hover 通过 title 查看完整值 */}
           <div className="flex items-center gap-2">
             <HashIcon className="h-5 w-5 text-muted-foreground" />
             <div>
@@ -199,7 +240,7 @@ export function DetailsTab({ state }: DetailsTabProps) {
         </div>
       </div>
 
-      {/* Time Info */}
+      {/* 时间信息：开始时间在运行中已有值，结束时间在结束后才有 */}
       <div className="border rounded-lg p-4 space-y-2">
         <h4 className="text-sm font-medium">时间信息</h4>
         <div className="space-y-1 text-sm">
@@ -214,13 +255,13 @@ export function DetailsTab({ state }: DetailsTabProps) {
         </div>
       </div>
 
-      {/* Input JSON */}
+      {/* 输入参数：execute() 时提交的 inputs 快照 */}
       <JsonSection title="输入参数" data={inputs} />
 
-      {/* Output JSON */}
+      {/* 输出结果：取 result.outputs，运行中或失败时可能为空 */}
       <JsonSection title="输出结果" data={result?.outputs} />
 
-      {/* Error Details */}
+      {/* 错误详情：仅当 result.error 存在时展示，来自引擎或节点执行器 */}
       {result?.error && (
         <div className="border border-red-200 rounded-lg p-4 bg-red-50 overflow-hidden">
           <h4 className="text-sm font-medium text-red-700 mb-2">错误详情</h4>

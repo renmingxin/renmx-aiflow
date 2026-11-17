@@ -42,11 +42,17 @@ export default function WorkflowPage() {
 
   if (loading) {
     return (
-      <div className="flex-1 overflow-hidden flex items-center justify-center">
+      <div className="h-screen flex items-center justify-center">
         <div className="text-muted-foreground">加载中...</div>
       </div>
     )
   }
 
-  return <FlowEditor appId={appId} appName={appName} initialNodes={initialNodes} initialEdges={initialEdges} />
+  // 该页面不在 (main) 路由组内，没有 layout 提供高度；
+  // FlowEditor 根节点是 h-full，必须由这层容器给出高度，否则画布会塌陷成 0 高度（白屏）。
+  return (
+    <div className="h-screen w-full">
+      <FlowEditor appId={appId} appName={appName} initialNodes={initialNodes} initialEdges={initialEdges} />
+    </div>
+  )
 }

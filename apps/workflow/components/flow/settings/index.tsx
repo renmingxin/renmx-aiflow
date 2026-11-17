@@ -25,6 +25,7 @@ interface SettingsProps {
 }
 
 export function Settings({ node, onUpdateNode, onUpdateNodeLabel, onClose, nodes = [], edges = [] }: SettingsProps) {
+  console.log('Settings---', { node, nodes, edges })
   const isPlugin = node?.type ? isPluginNodeType(node.type) : false
   const pluginColor = typeof (node?.data as any)?.color === 'string' ? ((node?.data as any)?.color as string) : '#4F46E5'
   const NodeIcon = isPlugin ? (
@@ -72,7 +73,15 @@ export function Settings({ node, onUpdateNode, onUpdateNodeLabel, onClose, nodes
               )}
               <NodeTitleEditor title={nodeTitle} onTitleChange={(newLabel: string) => onUpdateNodeLabel?.(node.id, newLabel)} />
             </div>
-            <Button variant="ghost" size="icon-sm" onClick={onClose}>
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              type="button"
+              // 阻止事件冒泡到画布：否则 pointer 事件可能被 React Flow 捕获，
+              // 导致点击 X 时节点被重新选中、面板又弹回来
+              onPointerDown={event => event.stopPropagation()}
+              onClick={() => onClose?.()}
+            >
               <X />
             </Button>
           </div>
