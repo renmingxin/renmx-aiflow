@@ -4,6 +4,7 @@ import {
   HttpSettingsForm,
   KnowledgeSettingsForm,
   LLMSettingsForm,
+  OpenAIISettingsForm,
   StartSettingsForm,
 } from './forms'
 import { NodeKind, NodeSettingsFormComponent, NodeSettingsStrategy } from './types'
@@ -74,6 +75,7 @@ export const nodeSettingsRegistry = new NodeSettingsRegistry()
 // 注册所有节点类型的设置表单
 nodeSettingsRegistry.register('start', StartSettingsForm)
 nodeSettingsRegistry.register('llm', LLMSettingsForm)
+nodeSettingsRegistry.register('openai', OpenAIISettingsForm)
 nodeSettingsRegistry.register('http', HttpSettingsForm)
 nodeSettingsRegistry.register('condition', ConditionSettingsForm)
 nodeSettingsRegistry.register('end', EndSettingsForm)

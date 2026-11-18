@@ -1,6 +1,6 @@
 'use client'
 
-import { BookOpen, Brain, GitBranch, Globe, HomeIcon, Terminal } from 'lucide-react'
+import { BookOpen, Brain, BrainCircuit, GitBranch, Globe, HomeIcon, Terminal } from 'lucide-react'
 
 import type { NodeKind } from '@/components/flow/settings/types'
 import { PluginIcon } from '@/components/plugin/plugin-icon'
@@ -28,6 +28,12 @@ export const builtInNodeItems: EditorNodeItem[] = [
     label: '大模型',
     description: '调用 LLM 进行文本处理',
     icon: <Brain size={14} />,
+  },
+  {
+    type: 'openai',
+    label: 'openai大模型',
+    description: '调用 openai大模型 进行文本处理',
+    icon: <BrainCircuit size={14} />,
   },
   {
     type: 'knowledge',

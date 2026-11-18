@@ -4,6 +4,9 @@ export type { StartNodeConfig, InputParam, ParamType } from './start-settings-fo
 export { LLMSettingsForm } from './llm-settings-form'
 export type { LLMNodeConfig } from './llm-settings-form'
 
+export { OpenAIISettingsForm } from './llm-openai-settings-form'
+export type { OpenAINodeConfig } from './llm-openai-settings-form'
+
 export { HttpSettingsForm } from './http-settings-form'
 export type { HttpNodeConfig, HttpMethod, BodyType, KeyValuePair } from './http-settings-form'
 

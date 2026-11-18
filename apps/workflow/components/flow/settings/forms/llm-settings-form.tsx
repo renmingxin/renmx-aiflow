@@ -141,7 +141,7 @@ export function LLMSettingsForm({ node, onSave, onCancel, flowContext }: NodeSet
               value={field.value || ''}
               onChange={field.onChange}
               availableOutputs={availableOutputs}
-              placeholder="预设的助理回复开头..."
+              placeholder="可以记录一些上下文，如我喜欢编程"
               minHeight="60px"
             />
           )}

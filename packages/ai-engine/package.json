@@ -24,10 +24,12 @@
     "example": "tsx src/example/run-workflow.ts"
   },
   "dependencies": {
+    "@langchain/openai": "1.7.0",
     "@langchain/core": "^1.0.3",
     "@langchain/langgraph": "^1.0.0",
     "@langchain/ollama": "^1.0.0",
     "@qdrant/js-client-rest": "^1.16.2",
+    "langchain": "1.5.19",
     "zod": "^3.25.76"
   },
   "devDependencies": {

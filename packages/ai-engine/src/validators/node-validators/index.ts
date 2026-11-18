@@ -1,6 +1,7 @@
 export { StartValidator } from './start-validator'
 export { EndValidator } from './end-validator'
 export { LLMValidator } from './llm-validator'
+export { OpenAIValidator } from './llm-open-validator'
 export { ConditionValidator } from './condition-validator'
 export { HTTPValidator } from './http-validator'
 export { KnowledgeValidator } from './knowledge-validator'

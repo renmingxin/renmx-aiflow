@@ -1,7 +1,7 @@
 /**
  * 节点类型枚举
  */
-export type NodeKind = 'start' | 'llm' | 'http' | 'condition' | 'end' | 'knowledge'
+export type NodeKind = 'start' | 'llm' | 'openai' | 'http' | 'condition' | 'end' | 'knowledge'
 
 /**
  * 工作流节点定义

@@ -78,6 +78,7 @@ export function getNodeTypeOutputs(nodeType: NodeKind, nodeData?: any): NodeOutp
     }
 
     case 'llm':
+    case 'openai':
       return [
         { name: 'output', label: '输出内容', type: 'string', description: 'LLM 生成的文本内容' },
         { name: 'tokens', label: 'Token 数', type: 'number', description: '消耗的 token 数量' },

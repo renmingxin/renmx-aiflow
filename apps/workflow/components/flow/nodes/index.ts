@@ -6,12 +6,14 @@ import { EndNode } from './end-node'
 import { HttpNode } from './http-node'
 import { KnowledgeNode } from './knowledge-node'
 import { LLMNode } from './llm-node'
+import { OpenAINode } from './llm-openai'
 import { PluginFlowNode } from './plugin-node'
 import { StartNode } from './start-node'
 
 export const builtInNodeTypes = {
   start: StartNode,
   llm: LLMNode,
+  openai: OpenAINode,
   http: HttpNode,
   end: EndNode,
   condition: ConditionNode,
@@ -31,6 +33,7 @@ export const nodeTypes = builtInNodeTypes
 
 export { StartNode }
 export { LLMNode }
+export { OpenAINode }
 export { HttpNode }
 export { EndNode }
 export { ConditionNode }

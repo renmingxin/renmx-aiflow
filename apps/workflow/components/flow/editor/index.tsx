@@ -165,6 +165,17 @@ const defaultNodeConfigs: Record<BuiltInNodeKind, { label: string; config: Recor
       maxTokens: 2000,
     },
   },
+  openai: {
+    label: 'openai大模型',
+    config: {
+      model: 'huoshan',
+      systemPrompt: '',
+      userPrompt: '',
+      assistantPrompt: '',
+      temperature: 0.7,
+      maxTokens: 2000,
+    },
+  },
   http: {
     label: 'HTTP 请求',
     config: {

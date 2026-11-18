@@ -4,7 +4,7 @@ import { ComponentType } from 'react'
 /**
  * 内置节点类型
  */
-export type BuiltInNodeKind = 'start' | 'llm' | 'http' | 'condition' | 'end' | 'knowledge'
+export type BuiltInNodeKind = 'start' | 'llm' | 'http' | 'condition' | 'end' | 'knowledge' | 'openai'
 
 /**
  * 节点类型 - 包括内置节点和插件节点

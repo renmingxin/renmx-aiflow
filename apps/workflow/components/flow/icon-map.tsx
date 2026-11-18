@@ -1,4 +1,4 @@
-import { BookOpen, Brain, GitBranch, Globe, HomeIcon, type LucideIcon, Puzzle, Terminal } from 'lucide-react'
+import { BookOpen, Brain, BrainCircuit, GitBranch, Globe, HomeIcon, type LucideIcon, Puzzle, Terminal } from 'lucide-react'
 
 import type { BuiltInNodeKind } from './settings/types'
 
@@ -8,6 +8,7 @@ import type { BuiltInNodeKind } from './settings/types'
 export const ICON_MAP: Record<BuiltInNodeKind, LucideIcon> = {
   start: HomeIcon,
   llm: Brain,
+  openai: BrainCircuit,
   http: Globe,
   end: Terminal,
   condition: GitBranch,
@@ -32,6 +33,8 @@ export function getIcon(type: string) {
       return <HomeIcon size={14} />
     case 'llm':
       return <Brain size={14} />
+    case 'openai':
+      return <BrainCircuit size={14} />
     case 'http':
       return <Globe size={14} />
     case 'end':
@@ -52,6 +55,8 @@ export const getColor = (type: string) => {
       return 'bg-blue-700'
     case 'llm':
       return 'bg-purple-700'
+    case 'openai':
+      return 'bg-green-700'
     case 'http':
       return 'bg-green-700'
     case 'end':
