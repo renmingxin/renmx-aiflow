@@ -240,7 +240,7 @@ export function useWorkflowRunner({ appId, nodes, edges }: UseWorkflowRunnerOpti
    * 所有更新都基于 prev 做不可变更新，保证 React 能正确触发重渲染。
    */
   const handleSSEEvent = useCallback((event: SSEEvent) => {
-    console.log('handleSSEEvent:', { event })
+    console.log('handleSSEEvent:', event.type, event)
     switch (event.type) {
       // 执行开始：主要记录 executionId，后续用于查询执行历史
       case 'workflow:start': {

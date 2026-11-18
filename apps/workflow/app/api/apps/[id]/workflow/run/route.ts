@@ -22,6 +22,7 @@ import { NextRequest } from 'next/server'
 import { ExecutionStatus } from '@/app/generated/prisma/enums'
 import { apiError, ErrorCode } from '@/lib/api-response'
 import { getCurrentUserId } from '@/lib/auth'
+import { createRequestLogger } from '@/lib/logger'
 import { prisma } from '@/lib/prisma'
 import { registerRemotePluginNodesForWorkflow, type WorkflowEngineLike } from '@/lib/services/plugin-runtime-service'
 import type {
@@ -102,6 +103,7 @@ interface RunWorkflowRequest {
 
 export async function POST(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const logger = createRequestLogger(crypto.randomUUID())
     const { id: appId } = await params
     const userId = await getCurrentUserId()
 
@@ -127,6 +129,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
     // 解析并校验请求体：nodes/edges 必须都是数组，否则引擎无法构图
     const body = (await request.json()) as RunWorkflowRequest
     const { nodes, edges, inputs } = body
+    logger.info({ nodes, edges, inputs }, '运行工作流请求体')
 
     if (!nodes || !Array.isArray(nodes)) {
       return apiError(ErrorCode.VALIDATION_ERROR, '节点数据格式错误')
@@ -156,6 +159,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
         target: e.target,
       })),
     }
+    logger.info({ workflow }, '转换后的工作流定义')
 
     // 创建 SSE 可读流：start 回调会在 Response 返回后异步执行整个工作流
     const stream = new ReadableStream({
@@ -247,6 +251,7 @@ export async function POST(request: NextRequest, { params }: { params: Promise<{
                 }
               }
 
+              // 发送节点结束事件：包含节点执行结果
               send<NodeEndEventData>({
                 type: 'node:end',
                 data: {
