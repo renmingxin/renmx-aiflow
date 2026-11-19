@@ -169,12 +169,8 @@ export function ConditionSettingsForm({ node, onSave, onCancel, flowContext }: N
             <SelectValue placeholder="请选择模型" />
           </SelectTrigger>
           <SelectContent>
-            {/* <SelectItem value="gpt-3.5-turbo">gpt-3.5-turbo</SelectItem>
-                        <SelectItem value="gpt-4">gpt-4</SelectItem>
-                        <SelectItem value="gpt-4-turbo">gpt-4-turbo</SelectItem>
-                        <SelectItem value="qwen3:0.6b">qwen3:0.6b</SelectItem>
-                        <SelectItem value="qwen-max">qwen-max</SelectItem> */}
-            <SelectItem value="qwen3.5:2b">qwen3.5:2b</SelectItem>
+            <SelectItem value="qwen3.5:2b">本地ollama模型：qwen3.5:2b</SelectItem>
+            <SelectItem value="openai">openai火山模型</SelectItem>
           </SelectContent>
         </Select>
         <p className="text-xs text-muted-foreground mt-1">选择用于意图识别的模型</p>

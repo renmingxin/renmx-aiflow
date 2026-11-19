@@ -1,4 +1,4 @@
-import type { WorkflowDefinition, WorkflowNode } from '../types'
+import type { WorkflowDefinition, WorkflowEdge, WorkflowNode } from '../types'
 
 /**
  * 执行图构建器
@@ -6,17 +6,17 @@ import type { WorkflowDefinition, WorkflowNode } from '../types'
  */
 export class GraphBuilder {
   private workflow: WorkflowDefinition
-  private adjacencyList: Map<string, string[]>
+  private outgoingEdges: Map<string, WorkflowEdge[]>
   private reverseAdjacencyList: Map<string, string[]>
   private inDegree: Map<string, number>
-  private excludedNodes: Set<string>
+  private selectedBranches: Map<string, string>
 
   constructor(workflow: WorkflowDefinition) {
     this.workflow = workflow
-    this.adjacencyList = new Map()
+    this.outgoingEdges = new Map()
     this.reverseAdjacencyList = new Map()
     this.inDegree = new Map()
-    this.excludedNodes = new Set()
+    this.selectedBranches = new Map()
 
     this.buildGraph()
   }
@@ -27,16 +27,16 @@ export class GraphBuilder {
   private buildGraph(): void {
     // 初始化
     for (const node of this.workflow.nodes) {
-      this.adjacencyList.set(node.id, [])
+      this.outgoingEdges.set(node.id, [])
       this.reverseAdjacencyList.set(node.id, [])
       this.inDegree.set(node.id, 0)
     }
 
     // 添加边
     for (const edge of this.workflow.edges) {
-      const targets = this.adjacencyList.get(edge.source) || []
-      targets.push(edge.target)
-      this.adjacencyList.set(edge.source, targets)
+      const outgoing = this.outgoingEdges.get(edge.source) || []
+      outgoing.push(edge)
+      this.outgoingEdges.set(edge.source, outgoing)
 
       const sources = this.reverseAdjacencyList.get(edge.target) || []
       sources.push(edge.source)
@@ -52,43 +52,44 @@ export class GraphBuilder {
    */
   getExecutionOrder(): WorkflowNode[] {
     const result: WorkflowNode[] = []
-    const visited = new Set<string>()
     const queue: string[] = []
+    const reachable = new Set<string>()
 
     // 创建入度副本
     const inDegreeCopy = new Map(this.inDegree)
 
     // 找到所有入度为0的节点（起始节点）
     for (const [nodeId, degree] of inDegreeCopy) {
-      if (degree === 0 && !this.excludedNodes.has(nodeId)) {
+      if (degree === 0) {
         queue.push(nodeId)
+        reachable.add(nodeId)
       }
     }
 
     while (queue.length > 0) {
       const nodeId = queue.shift()!
 
-      if (visited.has(nodeId) || this.excludedNodes.has(nodeId)) {
-        continue
+      const canRun = reachable.has(nodeId)
+      const selectedBranch = this.selectedBranches.get(nodeId)
+      if (canRun) {
+        const node = this.workflow.nodes.find(n => n.id === nodeId)
+        if (node) {
+          result.push(node)
+        }
       }
 
-      visited.add(nodeId)
+      for (const { target, sourceHandle } of this.outgoingEdges.get(nodeId) || []) {
+        // 可达状态只沿选中的出口传播，共用的结束节点有一条有效来路即可执行。
+        if (canRun && (selectedBranch === undefined || sourceHandle === selectedBranch)) {
+          reachable.add(target)
+        }
 
-      const node = this.workflow.nodes.find(n => n.id === nodeId)
-      if (node) {
-        result.push(node)
-      }
-
-      // 更新后继节点的入度
-      const successors = this.adjacencyList.get(nodeId) || []
-      for (const successor of successors) {
-        if (this.excludedNodes.has(successor)) continue
-
-        const degree = inDegreeCopy.get(successor)! - 1
-        inDegreeCopy.set(successor, degree)
+        // 未选路径的入边也要处理，否则汇合节点会一直等待该路径。
+        const degree = inDegreeCopy.get(target)! - 1
+        inDegreeCopy.set(target, degree)
 
         if (degree === 0) {
-          queue.push(successor)
+          queue.push(target)
         }
       }
     }
@@ -98,37 +99,10 @@ export class GraphBuilder {
 
   /**
    * 选择分支（用于条件节点）
-   * 排除未选中分支的所有后续节点
+   * 记录选中的出口，由 getExecutionOrder 重新计算可达节点。
    */
   selectBranch(conditionNodeId: string, selectedBranchId: string): void {
-    const edges = this.workflow.edges.filter(e => e.source === conditionNodeId)
-
-    for (const edge of edges) {
-      // 如果不是选中的分支，排除该分支的所有后续节点
-      if (edge.sourceHandle !== selectedBranchId) {
-        this.excludeSubtree(edge.target)
-      }
-    }
-  }
-
-  /**
-   * 排除子树（递归）
-   */
-  private excludeSubtree(nodeId: string): void {
-    if (this.excludedNodes.has(nodeId)) return
-
-    this.excludedNodes.add(nodeId)
-
-    const successors = this.adjacencyList.get(nodeId) || []
-    for (const successor of successors) {
-      // 检查是否有其他未排除的入边
-      const predecessors = this.reverseAdjacencyList.get(successor) || []
-      const hasActiveInEdge = predecessors.some(p => !this.excludedNodes.has(p))
-
-      if (!hasActiveInEdge) {
-        this.excludeSubtree(successor)
-      }
-    }
+    this.selectedBranches.set(conditionNodeId, selectedBranchId)
   }
 
   /**
@@ -174,9 +148,8 @@ export class GraphBuilder {
       visited.add(nodeId)
       inStack.add(nodeId)
 
-      const successors = this.adjacencyList.get(nodeId) || []
-      for (const successor of successors) {
-        if (dfs(successor)) return true
+      for (const { target } of this.outgoingEdges.get(nodeId) || []) {
+        if (dfs(target)) return true
       }
 
       inStack.delete(nodeId)

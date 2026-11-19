@@ -24,6 +24,27 @@ import { BaseNodeExecutor } from '../base-executor'
  *
  * 注意：本类不处理超时与重试，invoke 抛错会被基类 execute 捕获并转成 success:false。
  */
+/**
+ * 创建火山方舟（OpenAI 兼容）聊天模型客户端。
+ *
+ * 之所以抽成独立函数：LLM 节点（OpenAIExecutor）和条件节点（ConditionExecutor）
+ * 都需要调用同一个方舟服务，集中在这里可以避免 apiKey / baseURL 在多个文件里各写一份。
+ *
+ * @param temperature 采样温度；不传则使用 ChatOpenAI 默认值。意图识别这类需要稳定输出的场景传 0
+ * @returns 配置好 model / apiKey / baseURL 的 ChatOpenAI 实例
+ */
+export function createArkChatModel(temperature?: number): ChatOpenAI {
+  return new ChatOpenAI({
+    model: 'deepseek-v4.1-flash',
+    apiKey: process.env.ARK_API_KEY ?? '',
+    configuration: {
+      // 注意：这个 key 是方舟 plan 端点的专用 key，标准 /api/v3 会返回 401
+      baseURL: 'https://ark.cn-beijing.volces.com/api/plan/v3',
+    },
+    ...(temperature === undefined ? {} : { temperature }),
+  })
+}
+
 export class OpenAIExecutor extends BaseNodeExecutor<LLMNodeConfig> {
   /**
    * 节点类型标识，注册表中的 key；与工作流定义里的 type 必须一致。
@@ -90,12 +111,9 @@ export class OpenAIExecutor extends BaseNodeExecutor<LLMNodeConfig> {
     // 因此最终 duration 只包含真正的模型调用时间，不含配置解析与日志开销
     const startTime = Date.now()
 
-    // 创建 ChatOpenAI 实例（当前为写死的火山方舟配置）
-    // - model：方舟支持的模型名
-    // - apiKey：方舟 API Key（当前硬编码在代码里，后续应改为读环境变量）
-    // - configuration.baseURL：方舟 OpenAI 兼容端点，注意这里用的是 /api/plan/v3
+    // 创建 ChatOpenAI 实例：model / apiKey / baseURL 统一由 createArkChatModel 提供
     //
-    // 注意：节点的 model / temperature 等表单配置目前被这里的三项写死值覆盖，
+    // 注意：节点的 model / temperature 等表单配置目前被工厂函数里的写死值覆盖，
     // 修改节点设置不会影响实际请求。
 
     // const llm = new ChatOllama({
@@ -103,13 +121,7 @@ export class OpenAIExecutor extends BaseNodeExecutor<LLMNodeConfig> {
     //   temperature: resolvedConfig.temperature ?? 0.7,
     //   numPredict: resolvedConfig.maxTokens,
     // })
-    const llm = new ChatOpenAI({
-      model: 'deepseek-v4.1-flash',
-      apiKey: process.env.ARK_API_KEY ?? '',
-      configuration: {
-        baseURL: 'https://ark.cn-beijing.volces.com/api/plan/v3',
-      },
-    })
+    const llm = createArkChatModel()
 
     // 调用 LLM
     // invoke 会等待模型生成完毕才返回（非流式），期间整个节点处于运行中状态

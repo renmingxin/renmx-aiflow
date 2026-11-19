@@ -163,7 +163,10 @@ export class WorkflowEngine implements IWorkflowEngine {
       let finalOutputs: Record<string, unknown> = {}
       const executedNodes = new Set<string>()
 
-      for (const node of executionOrder) {
+      let nextNodeIndex = 0
+      while (nextNodeIndex < executionOrder.length) {
+        const node = executionOrder[nextNodeIndex++]
+
         // 跳过已执行节点：分支裁剪后重新排序可能把已跑过的节点再次带入列表
         if (executedNodes.has(node.id)) {
           continue
@@ -201,6 +204,8 @@ export class WorkflowEngine implements IWorkflowEngine {
           graphBuilder.selectBranch(node.id, result.matchedBranch)
           // 重新排序：被裁掉的分支及其下游节点将从执行顺序中移除
           executionOrder = graphBuilder.getExecutionOrder()
+          // 从新列表继续调度，已完成节点由 executedNodes 跳过。
+          nextNodeIndex = 0
           logger.debug('Branch selected, execution order updated', {
             selectedBranch: result.matchedBranch,
             newOrder: executionOrder.map(n => `${n.id}(${n.type})`),
