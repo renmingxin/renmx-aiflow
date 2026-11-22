@@ -16,17 +16,17 @@ services:
       options:
         max-size: '100m'
         max-file: "3"
-    # Qdrant 向量数据库
-    renmx-aiflow-qdrant:
-      image: qdrant/qdrant:latest
-      container_name: renmx-aiflow-qdrant
-      ports:
-        - '6333:6333' # REST API
-        - '6334:6334' # gRPC
-      volumes:
-        - ./qdrant_storage:/qdrant/storage
-      logging:
-        driver: 'json-file'
-        options:
-          max-size: '100m'
-          max-file: '3'
+  # Qdrant 向量数据库
+  renmx-aiflow-qdrant:
+    image: qdrant/qdrant:latest
+    container_name: renmx-aiflow-qdrant
+    ports:
+      - '6333:6333' # REST API
+      - '6334:6334' # gRPC
+    volumes:
+      - ./qdrant_storage:/qdrant/storage
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '100m'
+        max-file: '3'
