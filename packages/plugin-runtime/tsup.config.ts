@@ -10,7 +10,7 @@ export default defineConfig([
     clean: true,
     minify: true,
     outDir: 'build/esm',
-    external: ['@miaoma-aiflow/plugin-core', '@miaoma-aiflow/ai-engine'],
+    external: ['@renmx-aiflow/plugin-core', '@renmx-aiflow/ai-engine'],
   },
   {
     entry: ['src/index.ts'],
@@ -21,6 +21,6 @@ export default defineConfig([
     clean: true,
     minify: true,
     outDir: 'build/cjs',
-    external: ['@miaoma-aiflow/plugin-core', '@miaoma-aiflow/ai-engine'],
+    external: ['@renmx-aiflow/plugin-core', '@renmx-aiflow/ai-engine'],
   },
 ])

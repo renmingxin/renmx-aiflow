@@ -1,10 +1,10 @@
 {
-  "name": "@miaoma-aiflow/ai-engine",
+  "name": "@renmx-aiflow/ai-engine",
   "private": true,
-  "license": "MIAOMAEDU",
+  "license": "RENMXEDU",
   "version": "1.0.0",
   "keywords": [
-    "miaoma",
+    "renmx",
     "aiflow",
     "typescript"
   ],

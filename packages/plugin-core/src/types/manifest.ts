@@ -93,7 +93,7 @@ export interface PluginManifest {
   config?: PluginConfigSchema
   /** 引擎版本要求 */
   engines?: {
-    miaoma?: string
+    renmx?: string
     node?: string
   }
 }

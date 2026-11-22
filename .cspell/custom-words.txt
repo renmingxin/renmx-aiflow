@@ -6,8 +6,8 @@ Fulltext
 Heyi
 Jamik
 langchain
-miaoma
-miaomaignore
+renmx
+renmxignore
 mxbai
 njsproj
 ntvs

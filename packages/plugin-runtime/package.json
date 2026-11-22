@@ -1,10 +1,10 @@
 {
-    "name": "@miaoma-aiflow/plugin-runtime",
+    "name": "@renmx-aiflow/plugin-runtime",
     "private": true,
-    "license": "MIAOMAEDU",
+    "license": "RENMXEDU",
     "version": "1.0.0",
     "keywords": [
-        "miaoma",
+        "renmx",
         "aiflow",
         "plugin",
         "runtime",
@@ -25,8 +25,8 @@
         "test:watch": "vitest"
     },
     "dependencies": {
-        "@miaoma-aiflow/ai-engine": "workspace:*",
-        "@miaoma-aiflow/plugin-core": "workspace:*"
+        "@renmx-aiflow/ai-engine": "workspace:*",
+        "@renmx-aiflow/plugin-core": "workspace:*"
     },
     "devDependencies": {
         "vitest": "^4.0.16"

@@ -4,7 +4,7 @@ import {
   createQdrantVectorStore,
   type FulltextSearchProvider,
   type RetrievalResult,
-} from '@miaoma-aiflow/ai-engine'
+} from '@renmx-aiflow/ai-engine'
 import { NextRequest } from 'next/server'
 import { z } from 'zod'
 

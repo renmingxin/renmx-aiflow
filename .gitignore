@@ -47,7 +47,7 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-.miaomaignore
+.renmxignore
 .dependencygraph
 node_modules
 dist

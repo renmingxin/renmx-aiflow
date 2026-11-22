@@ -246,7 +246,7 @@ interface ComponentSandboxProps {
  * @example
  * ```tsx
  * <ComponentSandbox
- *     pluginId="@miaoma/email-sender"
+ *     pluginId="@renmx/email-sender"
  *     nodeId="email-1"
  *     config={{ allowFetch: true, allowedDomains: ['api.example.com'] }}
  * >

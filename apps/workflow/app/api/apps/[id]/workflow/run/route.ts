@@ -16,7 +16,7 @@
  *   用流式响应可以边跑边推送，而不是等全部结束才返回。
  */
 
-import { createWorkflowEngine, NodeKind, WorkflowDefinition } from '@miaoma-aiflow/ai-engine'
+import { createWorkflowEngine, NodeKind, WorkflowDefinition } from '@renmx-aiflow/ai-engine'
 import { NextRequest } from 'next/server'
 
 import { ExecutionStatus } from '@/app/generated/prisma/enums'

@@ -231,7 +231,7 @@ interface CreatePluginNodeSettingsOptions {
  * @example
  * ```typescript
  * const EmailSettingsComponent = createPluginNodeSettingsComponent({
- *     pluginId: '@miaoma/email-sender',
+ *     pluginId: '@renmx/email-sender',
  *     nodeType: 'email-send',
  *     configSchema: emailNodeSchema,
  *     customComponentUrl: 'https://cdn.example.com/email-plugin/components.umd.js',

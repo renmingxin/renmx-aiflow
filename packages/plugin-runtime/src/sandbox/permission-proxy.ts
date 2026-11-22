@@ -5,7 +5,7 @@ import type {
   LLMInvokeResult,
   PluginPermission,
   PluginServices,
-} from '@miaoma-aiflow/plugin-core'
+} from '@renmx-aiflow/plugin-core'
 
 /**
  * 权限拒绝错误

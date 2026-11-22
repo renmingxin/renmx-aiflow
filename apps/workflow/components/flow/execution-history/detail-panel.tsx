@@ -1,6 +1,6 @@
 'use client'
 
-import type { NodeKind } from '@miaoma-aiflow/ai-engine'
+import type { NodeKind } from '@renmx-aiflow/ai-engine'
 import type { Edge, Node } from '@xyflow/react'
 import { HistoryIcon, Loader2, X } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'

@@ -5,8 +5,8 @@ import {
   type FulltextSearchProvider,
   type RetrievalResult,
   type WorkflowDefinition,
-} from '@miaoma-aiflow/ai-engine'
-import type { PluginPermission } from '@miaoma-aiflow/plugin-core'
+} from '@renmx-aiflow/ai-engine'
+import type { PluginPermission } from '@renmx-aiflow/plugin-core'
 import {
   type AiEngineLike,
   parsePluginNodeType,
@@ -14,7 +14,7 @@ import {
   PluginLoader,
   PluginRuntimeAiEngineError,
   registerPluginNodesForAiEngine,
-} from '@miaoma-aiflow/plugin-runtime'
+} from '@renmx-aiflow/plugin-runtime'
 
 import { ApiError, ErrorCode } from '@/lib/api-response'
 // import { sendEmail as sendPlatformEmail } from '@/lib/email'

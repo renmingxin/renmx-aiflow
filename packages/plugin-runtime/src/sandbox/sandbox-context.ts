@@ -6,7 +6,7 @@ import type {
   PluginLogger,
   PluginPermission,
   PluginServices,
-} from '@miaoma-aiflow/plugin-core'
+} from '@renmx-aiflow/plugin-core'
 
 import { createPermissionProxy, PermissionChecker } from './permission-proxy'
 

@@ -11,7 +11,7 @@
  * 这样即使节点在画布上被拖乱，追踪列表也始终符合真实执行顺序。
  */
 
-import type { ExecutionLogEntry, NodeKind } from '@miaoma-aiflow/ai-engine'
+import type { ExecutionLogEntry, NodeKind } from '@renmx-aiflow/ai-engine'
 import type { Edge, Node } from '@xyflow/react'
 import { AlertCircleIcon, CheckCircle2Icon, ChevronDownIcon, ClockIcon, Loader2 } from 'lucide-react'
 import { useMemo, useState } from 'react'

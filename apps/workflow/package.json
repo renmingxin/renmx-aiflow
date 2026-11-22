@@ -13,9 +13,9 @@
     "db:studio": "prisma studio"
   },
   "dependencies": {
-    "@miaoma-aiflow/ai-engine": "workspace:*",
-    "@miaoma-aiflow/plugin-core": "workspace:*",
-    "@miaoma-aiflow/plugin-runtime": "workspace:*",
+    "@renmx-aiflow/ai-engine": "workspace:*",
+    "@renmx-aiflow/plugin-core": "workspace:*",
+    "@renmx-aiflow/plugin-runtime": "workspace:*",
     "@qdrant/js-client-rest": "^1.16.2",
     "next": "16.1.1",
     "react": "19.2.3",

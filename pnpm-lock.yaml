@@ -325,15 +325,6 @@ importers:
       '@floating-ui/dom':
         specifier: ^1.7.4
         version: 1.8.0
-      '@miaoma-aiflow/ai-engine':
-        specifier: workspace:*
-        version: link:../../packages/ai-engine
-      '@miaoma-aiflow/plugin-core':
-        specifier: workspace:*
-        version: link:../../packages/plugin-core
-      '@miaoma-aiflow/plugin-runtime':
-        specifier: workspace:*
-        version: link:../../packages/plugin-runtime
       '@prisma/adapter-pg':
         specifier: ^7.2.0
         version: 7.10.1
@@ -400,6 +391,15 @@ importers:
       '@radix-ui/react-tooltip':
         specifier: ^1.2.8
         version: 1.4.1(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
+      '@renmx-aiflow/ai-engine':
+        specifier: workspace:*
+        version: link:../../packages/ai-engine
+      '@renmx-aiflow/plugin-core':
+        specifier: workspace:*
+        version: link:../../packages/plugin-core
+      '@renmx-aiflow/plugin-runtime':
+        specifier: workspace:*
+        version: link:../../packages/plugin-runtime
       '@tabler/icons-react':
         specifier: ^3.35.0
         version: 3.51.0(react@19.2.3)
@@ -571,10 +571,10 @@ importers:
 
   packages/plugin-runtime:
     dependencies:
-      '@miaoma-aiflow/ai-engine':
+      '@renmx-aiflow/ai-engine':
         specifier: workspace:*
         version: link:../ai-engine
-      '@miaoma-aiflow/plugin-core':
+      '@renmx-aiflow/plugin-core':
         specifier: workspace:*
         version: link:../plugin-core
     devDependencies:

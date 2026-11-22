@@ -19,7 +19,7 @@
  *   - SSE 按 `\n\n` 分帧，未收完的半帧留在 buffer 中等待下一块数据
  */
 
-import type { ExecutionLogEntry, NodeKind } from '@miaoma-aiflow/ai-engine'
+import type { ExecutionLogEntry, NodeKind } from '@renmx-aiflow/ai-engine'
 import { useCallback, useRef, useState } from 'react'
 
 import type {

@@ -1,5 +1,5 @@
 /**
- * @miaoma-aiflow/plugin-core
+ * @renmx-aiflow/plugin-core
  *
  * AI Flow 插件核心类型定义包
  *

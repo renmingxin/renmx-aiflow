@@ -7,7 +7,7 @@ import type { ChunkWithVector } from '../types'
  * Qdrant 存储测试
  *
  * 注意：这些测试需要 Qdrant 服务运行
- * 启动方式：docker compose -f docker/docker-compose.yml up -d miaoma-aiflow-qdrant
+ * 启动方式：docker compose -f docker/docker-compose.yml up -d renmx-aiflow-qdrant
  */
 describe('QdrantVectorStore', () => {
   const TEST_COLLECTION = 'test_knowledge_chunks'

@@ -4,7 +4,7 @@ import {
   createOllamaEmbeddingService,
   createQdrantVectorStore,
   createTextSplitter,
-} from '@miaoma-aiflow/ai-engine'
+} from '@renmx-aiflow/ai-engine'
 
 import { prisma } from '@/lib/prisma'
 

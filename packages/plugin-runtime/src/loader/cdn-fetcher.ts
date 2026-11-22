@@ -1,4 +1,4 @@
-import type { PluginManifest } from '@miaoma-aiflow/plugin-core'
+import type { PluginManifest } from '@renmx-aiflow/plugin-core'
 
 /**
  * CDN 获取器配置

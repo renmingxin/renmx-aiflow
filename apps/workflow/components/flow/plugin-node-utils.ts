@@ -3,7 +3,7 @@ import {
   isPluginNodeType,
   type ParsedPluginNodeType,
   parsePluginNodeType,
-} from '@miaoma-aiflow/plugin-runtime'
+} from '@renmx-aiflow/plugin-runtime'
 
 import type { ExtendedJSONSchema7 } from '@/components/plugin/schema-form/types'
 

@@ -259,13 +259,13 @@ async function runExample() {
     : // 查询订单信息
       {
         count: 5,
-        userName: 'MiaoMa',
+        userName: 'Renmx',
         question: '请帮我查询订单状态',
       }
   //   //   询问技术问题
   //   {
   //       count: 5,
-  //       userName: 'MiaoMa',
+  //       userName: 'Renmx',
   //       question: '你好，我想问一下，前端开发是什么？',
   //   }
 

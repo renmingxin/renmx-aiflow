@@ -1,4 +1,4 @@
-import type { PluginManifest, PluginNodeExecutor, PluginPermission, PluginServices } from '@miaoma-aiflow/plugin-core'
+import type { PluginManifest, PluginNodeExecutor, PluginPermission, PluginServices } from '@renmx-aiflow/plugin-core'
 
 import type { SandboxContext } from '../sandbox/sandbox-context'
 import { createSandboxContext } from '../sandbox/sandbox-context'

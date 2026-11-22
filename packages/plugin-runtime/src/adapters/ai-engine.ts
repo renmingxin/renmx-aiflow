@@ -5,8 +5,8 @@ import type {
   NodeExecutor,
   NodeKind,
   WorkflowDefinition,
-} from '@miaoma-aiflow/ai-engine'
-import type { PluginNodeExecutor, PluginPermission } from '@miaoma-aiflow/plugin-core'
+} from '@renmx-aiflow/ai-engine'
+import type { PluginNodeExecutor, PluginPermission } from '@renmx-aiflow/plugin-core'
 
 import type { PluginLoader, PluginModule } from '../loader'
 import { parsePluginNodeType } from '../utils'

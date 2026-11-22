@@ -10,7 +10,7 @@
  * 组件本身不发起任何请求，只做纯展示；结果数据完全由父组件传入。
  */
 
-import type { WorkflowResult } from '@miaoma-aiflow/ai-engine'
+import type { WorkflowResult } from '@renmx-aiflow/ai-engine'
 import { AlertCircleIcon, CheckCircle2Icon, CopyIcon, Loader2 } from 'lucide-react'
 import { useMemo, useState } from 'react'
 
